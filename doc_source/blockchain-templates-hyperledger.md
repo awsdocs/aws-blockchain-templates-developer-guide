@@ -6,29 +6,29 @@ The AWS Blockchain Template for Hyperledger Fabric only supports a *docker\-loca
 
 ## Links to Launch<a name="blockchain-hyperledger-launch"></a>
 
-Use the following links to launch AWS CloudFormation in specific regions with the AWS Blockchain Template for Hyperledger Fabric:
+Use the following links to launch AWS CloudFormation in specific regions with the template:
 + [Launch in US East \(N\. Virginia\) region \(us\-east\-1\)](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://aws-blockchain-templates-us-east-1.s3.us-east-1.amazonaws.com/hyperledger/fabric/templates/simplenetwork/latest/hyperledger.template.yaml )
 + [Launch in US East \(Ohio\) region \(us\-east\-2\)](https://us-east-2.console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/create/review?templateURL=https://aws-blockchain-templates-us-east-2.s3.us-east-2.amazonaws.com/hyperledger/fabric/templates/simplenetwork/latest/hyperledger.template.yaml)
 + [Launch in US West \(Oregon\) region \(us\-west\-2\)](https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?templateURL=https://aws-blockchain-templates-us-west-2.s3.us-west-2.amazonaws.com/hyperledger/fabric/templates/simplenetwork/latest/hyperledger.template.yaml)
 
 ## Links to Download<a name="blockchain-hyperledger-download"></a>
 
-Use the following links to download the AWS Blockchain Template for Hyperledger Fabric:
+Use the following links to download the template:
 + [Download template \(YAML\) from US East \(N\. Virginia\) region \(us\-east\-1\)](https://aws-blockchain-templates-us-east-1.s3.us-east-1.amazonaws.com/hyperledger/fabric/templates/simplenetwork/latest/hyperledger.template.yaml )
 + [Download template \(YAML\) from US East \(Ohio\) region \(us\-east\-2\)](https://aws-blockchain-templates-us-east-2.s3.us-east-2.amazonaws.com/hyperledger/fabric/templates/simplenetwork/latest/hyperledger.template.yaml)
 + [Download template \(YAML\) from US West \(Oregon\) region \(us\-west\-2\)](https://aws-blockchain-templates-us-west-2.s3.us-west-2.amazonaws.com/hyperledger/fabric/templates/simplenetwork/latest/hyperledger.template.yaml)
 
 ## AWS Blockchain Template for Hyperledger Fabric Components<a name="blockchain-hyperledger-architecture"></a>
 
-The AWS Blockchain Template for Hyperledger Fabric creates an EC2 instance with Docker, and launches a Hyperledger Fabric network using containers on that instance\. The network includes one order service and three organizations, each with one peer service\. The AWS Blockchain Template for Hyperledger Fabric also launches a Hyperledger Explorer container, which allows you to browse blockchain data\. A PostgreSQL server container is launched to support Hyperledger Explorer\.
+The AWS Blockchain Template for Hyperledger Fabric creates an EC2 instance with Docker, and launches a Hyperledger Fabric network using containers on that instance\. The network includes one order service and three organizations, each with one peer service\. The template also launches a Hyperledger Explorer container, which allows you to browse blockchain data\. A PostgreSQL server container is launched to support Hyperledger Explorer\.
 
-The following diagram depicts a Hyperledger Fabric network created using the AWS Blockchain Template for Hyperledger Fabric:
+The following diagram depicts a Hyperledger Fabric network created using the template:
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/hyperledger-docker-local-arch.png)
 
 ## Prerequisites<a name="blockchain-hyperledger-prerequisites"></a>
 
-Before you launch a Hyperledger Fabric network using AWS Blockchain Template for Hyperledger Fabric, make sure that the following requirements are satisfied: 
+Before you launch a Hyperledger Fabric network using template, make sure that the following requirements are satisfied: 
 + The IAM principle \(user or group\) that you use must have permission to work with all related services\.
 + You must have access to an EC2 key pair that you can use to access EC2 instances \(for example, using SSH\)\. The key must exist in the same region as the instance\.
 + You must have an EC2 instance profile with a permissions policy attached that allows access to Amazon Elastic Container Registry \(Amazon ECR\) to pull containers and to Amazon S3\. For an example permissions policy, see [Example IAM Permissions for the EC2 Instance Profile](#blockchain-hyperledger-ec2profile)\.
@@ -65,12 +65,12 @@ You specify an EC2 instance profile ARN as one of the parameters when you use th
 
 ## Connecting to Hyperledger Fabric Resources<a name="blockchain-hyperledger-connecting"></a>
 
-After the root stack that you create with the AWS Blockchain Template for Hyperledger Fabric shows **CREATE\_COMPLETE**, you can connect to Hyperledger Fabric resources on the EC2 instance\. If you specified a public subnet, you can connect to the EC2 instance as would any other EC2 instance\. For more information, see [Connecting to Your Linux Instance Using SSH](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+After the root stack that you create with the template shows **CREATE\_COMPLETE**, you can connect to Hyperledger Fabric resources on the EC2 instance\. If you specified a public subnet, you can connect to the EC2 instance as would any other EC2 instance\. For more information, see [Connecting to Your Linux Instance Using SSH](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 If you specified a private subnet, you can set up and use a *bastion host* to proxy connections to Hyperledger Fabric resources\. For more information, see [Proxy Connections Using a Bastion Host](blockchain-templates-ethereum.md#ethereum-create-bastion-host) below\.
 
 **Note**  
-You may notice that the AWS Blockchain Template for Hyperledger Fabric allocates a public IP address to the EC2 instance hosting Hyperledger Fabric services; however, this IP address is not publicly accessible because routing policies in the private subnet you specify do not allow traffic between this IP address and public sources\.
+You may notice that the template allocates a public IP address to the EC2 instance hosting Hyperledger Fabric services; however, this IP address is not publicly accessible because routing policies in the private subnet you specify do not allow traffic between this IP address and public sources\.
 
 ### Proxy Connections Using a Bastion Host<a name="hyperledger-create-bastion-host"></a>
 

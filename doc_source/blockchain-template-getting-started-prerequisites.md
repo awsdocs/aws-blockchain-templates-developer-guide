@@ -35,7 +35,7 @@ Use the Amazon VPC console \([https://console\.aws\.amazon\.com/vpc/](https://co
 
 1. For **Public subnet's IPv4 CIDR**, leave the default value\. For **Availability Zone**, choose a zone\. For **Public subnet name**, enter a friendly name\.
 
-   You specify this subnet as one of the first of two subnets for the Application Load Balancer when you use the AWS Blockchain Template for Ethereum\.
+   You specify this subnet as one of the first of two subnets for the Application Load Balancer when you use the template\.
 
 1. For **Private subnet's IPv4 CIDR**, leave the default value\. For **Availability Zone**, leave the **No Preference** default\. For **Private subnet name**, enter a friendly name\.
 
@@ -59,13 +59,13 @@ Use the Amazon VPC console \([https://console\.aws\.amazon\.com/vpc/](https://co
 1. Choose **Yes, Create**\.  
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/2nd-subnet.png)
 
-You should now see three subnets for the VPC that you created earlier\. Make a note of the three subnet names and IDs so that you can specify them using the AWS Blockchain Template for Ethereum\.
+You should now see three subnets for the VPC that you created earlier\. Make a note of the three subnet names and IDs so that you can specify them using the template\.
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/subnets-listing.png)
 
 ## Create Security Groups<a name="blockchain-templates-create-security-group"></a>
 
-Security groups act as firewalls, controlling inbound and outbound traffic to resources\. When you use AWS Blockchain Template for Ethereum to create an Ethererum network on an Amazon ECS cluster, you specify two security groups:
+Security groups act as firewalls, controlling inbound and outbound traffic to resources\. When you use the template to create an Ethererum network on an Amazon ECS cluster, you specify two security groups:
 + A security group for EC2 instances that controls traffic to and from EC2 instances in the cluster
 + A security group for the Application Load Balancer that controls traffic between the Application Load Balancer and external sources, and between the Application Load Balancer and EC2 instances in the network\.
 
@@ -133,7 +133,7 @@ The inbound rules below allow traffic on the specified ports from all IP address
 
 ## Create an IAM Role for Amazon ECS and an EC2 Instance Profile<a name="blockchain-templates-iam-roles"></a>
 
-When you use the AWS Blockchain Template for Ethereum in this template, you specify an IAM role for Amazon ECS and an EC2 instance profile\. The permissions policies attached to these roles allow the AWS resources and instances in your cluster interact with other AWS resources\. For more information, see [IAM Roles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) in the *IAM User Guide*\. You set up the IAM role for Amazon ECS and the EC2 instance profile using the IAM console \([https://console\.aws\.amazon\.com/iam/](https://console.aws.amazon.com/iam/)\)\.
+When you use this template, you specify an IAM role for Amazon ECS and an EC2 instance profile\. The permissions policies attached to these roles allow the AWS resources and instances in your cluster interact with other AWS resources\. For more information, see [IAM Roles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) in the *IAM User Guide*\. You set up the IAM role for Amazon ECS and the EC2 instance profile using the IAM console \([https://console\.aws\.amazon\.com/iam/](https://console.aws.amazon.com/iam/)\)\.
 
 **To create the IAM role for Amazon ECS**
 

@@ -4,21 +4,21 @@ Ethereum is a blockchain framework that runs smart contracts using Solidity, an 
 
 ## Links to Launch<a name="blockchain-ethereum-launch"></a>
 
-Use the following links to launch AWS CloudFormation in specific Regions with the AWS Blockchain Template for Ethereum\.
+Use the following links to launch AWS CloudFormation in specific Regions with the AWS Blockchain Template for Ethereum:
 + [Launch in US East \(N\. Virginia\) region \(us\-east\-1\)](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://aws-blockchain-templates-us-east-1.s3.us-east-1.amazonaws.com/ethereum/templates/latest/ethereum-network.template.yaml)
 + [Launch in US East \(Ohio\) region \(us\-east\-2\)](https://us-east-2.console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/create/review?templateURL=https://aws-blockchain-templates-us-east-2.s3.us-east-2.amazonaws.com/ethereum/templates/latest/ethereum-network.template.yaml)
 + [Launch in US West \(Oregon\) region \(us\-west\-2\)](https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/create/review?templateURL=https://aws-blockchain-templates-us-west-2.s3.us-west-2.amazonaws.com/ethereum/templates/latest/ethereum-network.template.yaml)
 
 ## Links to Download<a name="blockchain-ethereum-download"></a>
 
-Use the following links to download the AWS Blockchain Template for Ethereum\.
+Use the following links to download the template:
 + [Download template \(YAML\) from US East \(N\. Virginia\) region \(us\-east\-1\)](https://aws-blockchain-templates-us-east-1.s3.us-east-1.amazonaws.com/ethereum/templates/latest/ethereum-network.template.yaml)
 + [Download template \(YAML\) from US East \(Ohio\) region \(us\-east\-2\)](https://aws-blockchain-templates-us-east-2.s3.us-east-2.amazonaws.com/ethereum/templates/latest/ethereum-network.template.yaml)
 + [Download template \(YAML\) from US West \(Oregon\) region \(us\-west\-2\)](https://aws-blockchain-templates-us-west-2.s3.us-west-2.amazonaws.com/ethereum/templates/latest/ethereum-network.template.yaml)
 
 ## Ethereum Options<a name="blockchain-ethereum-options"></a>
 
-When you configure the Ethereum network using AWS Blockchain Template for Ethereum, you make choices that determine the subsequent requirements:
+When you configure the Ethereum network using the template, you make choices that determine the subsequent requirements:
 + [Choosing the Container Platform](#blockchain-ethereum-platform)
 + [Choosing a Private or Public Ethereum Network](#blockchain-private-public)
 
@@ -32,7 +32,7 @@ AWS Blockchain Templates use Docker containers stored in Amazon ECR to deploy bl
 
 With Amazon ECS, you create your Ethereum network on an ECS cluster composed of multiple EC2 instances, with an Application Load Balancer and related resources\. For more information about using the Amazon ECS configuration, see the [Getting Started with AWS Blockchain Templates](blockchain-templates-getting-started.md) tutorial\.
 
-The following diagram depicts a Ethereum network created using the AWS Blockchain Template for Ethereum with the ECS container platform option:
+The following diagram depicts a Ethereum network created using the template with the ECS container platform option:
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/ethereum-ecs-arch.png)
 
@@ -40,7 +40,7 @@ The following diagram depicts a Ethereum network created using the AWS Blockchai
 
 Alternatively, you can launch Ethereum containers within a single Amazon EC2 instance\. All containers run on a single EC2 instance\. This is a simplified setup\.
 
-The following diagram depicts a Ethereum network created using the AWS Blockchain Template for Ethereum with the docker\-local container platform option:
+The following diagram depicts a Ethereum network created using the template with the docker\-local container platform option:
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/ethereum-docker-local-arch.png)
 
@@ -52,7 +52,7 @@ When you choose an **Ethereum Network ID** from 1–4, the Ethereum nodes that y
 
 ## Prerequisites<a name="blockchain-ethereum-prereq"></a>
 
-When you set up your Ethereum network using the AWS Blockchain Template for Ethereum, the minimum requirements listed below must be satisfied\. The AWS Blockchain Template for Ethereum requires you to specify the AWS components listed\.
+When you set up your Ethereum network using the AWS Blockchain Template for Ethereum, the minimum requirements listed below must be satisfied\. The template requires you to specify the AWS components listed\.
 
 
 | Prerequisite | For ECS Platform | For Docker\-Local | 
@@ -76,7 +76,7 @@ When you set up your Ethereum network using the AWS Blockchain Template for Ethe
 
 ### Example IAM Permissions for the EC2 Instance Profile and ECS Role<a name="blockchain-ethereum-iam-examples"></a>
 
-You specify an EC2 instance profile ARN as one of the parameters when you use the AWS Blockchain Template for Ethereum\. If you use the ECS container platform, you also specify an ECS role ARN\. The permissions policies attached to these roles allow the AWS resources and instances in your cluster to interact with other AWS resources\. For more information, see [IAM Roles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) in the *IAM User Guide*\. Use the policy statements and procedures below as a starting point for creating permissions\.
+You specify an EC2 instance profile ARN as one of the parameters when you use the template\. If you use the ECS container platform, you also specify an ECS role ARN\. The permissions policies attached to these roles allow the AWS resources and instances in your cluster to interact with other AWS resources\. For more information, see [IAM Roles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) in the *IAM User Guide*\. Use the policy statements and procedures below as a starting point for creating permissions\.
 
 #### Example Permissions Policy for the EC2 Instance Profile<a name="blockchain-ethereum-ec2-instance"></a>
 
@@ -148,14 +148,14 @@ For the permissions attached to the ECS role, we recommend that you start with t
 
 ## Connecting to Ethereum Resources<a name="blockchain-ethereum-connecting"></a>
 
-After the root stack that you create with the AWS Blockchain Template for Ethereum shows **CREATE\_COMPLETE**, you can connect to Ethereum resources using the AWS CloudFormation console\. How you connect depends on the container platform that you choose, ECS or docker\-local:
+After the root stack that you create with the template shows **CREATE\_COMPLETE**, you can connect to Ethereum resources using the AWS CloudFormation console\. How you connect depends on the container platform that you choose, ECS or docker\-local:
 + **ECS**—The **Output** tab of the root stack provides links to services running on the Application Load Balancer\. These URLs are not directly accessible for security reasons\. To connect, you can set up and use a *bastion host* to proxy connections to them\. For more information, see [Proxy Connections Using a Bastion Host](#ethereum-create-bastion-host) below\.
-+ **docker\-local**—You connect using the IP address of the EC2 instance hosting Ethereum services as listed below\. Use the EC2 console to find the *ec2\-IP\-address* of the instance that the AWS Blockchain Template for Ethereum created\.
++ **docker\-local**—You connect using the IP address of the EC2 instance hosting Ethereum services as listed below\. Use the EC2 console to find the *ec2\-IP\-address* of the instance that the template created\.
   + **EthStats**—Use http://*ec2\-IP\-address*
   + **EthExplorer**—Use http://*ec2\-IP\-address*:8080
   + **EthJsonRpc**—Use http://*ec2\-IP\-address*:8545
 
-  If you specified a public subnet for **Ethereum Network Subnet ID** \(**List of VPC Subnets to use** within the AWS Blockchain Template for Ethereum\), you can connect directly\. Your client must be a trusted source of inbound traffic for SSH \(port 22\), as well as the ports listed\. This is determined by the **EC2 Security Group** that you specified using the AWS Blockchain Template for Ethereum\.
+  If you specified a public subnet for **Ethereum Network Subnet ID** \(**List of VPC Subnets to use** within the template\), you can connect directly\. Your client must be a trusted source of inbound traffic for SSH \(port 22\), as well as the ports listed\. This is determined by the **EC2 Security Group** that you specified using the AWS Blockchain Template for Ethereum\.
 
   If you specified a private subnet, you can set up and use a *bastion host* to proxy connections to these addresses\. For more information, see [Proxy Connections Using a Bastion Host](#ethereum-create-bastion-host) below\.
 
