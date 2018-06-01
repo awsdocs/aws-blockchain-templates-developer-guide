@@ -22,7 +22,7 @@ When you launch the AWS CloudFormation stack using the template, it creates nest
    + For **EC2 Security Group**, select the security group you created earlier in [Create Security Groups](blockchain-template-getting-started-prerequisites.md#blockchain-templates-create-security-group)\.
    + For **IAM Role for ECS**, enter the ARN of the ECS role that you created earlier in [Create an IAM Role for Amazon ECS and an EC2 Instance Profile](blockchain-template-getting-started-prerequisites.md#blockchain-templates-iam-roles)\.
    + For **EC2 Instance Profile ARN**, enter the ARN of the instance profile that you created earlier in [Create an IAM Role for Amazon ECS and an EC2 Instance Profile](blockchain-template-getting-started-prerequisites.md#blockchain-templates-iam-roles)\.
-   + For **Application Load Balancer Security Group**, select the security group for the Application Load Balancer that you created earlier in [Create Security Groups](blockchain-template-getting-started-prerequisites.md#blockchain-templates-create-security-group)\.
+   + For **Application Load Balancer Security Group**, select the security group for the Application Load Balancer and the EC2 security group that you created earlier in [Create Security Groups](blockchain-template-getting-started-prerequisites.md#blockchain-templates-create-security-group)\.
    + Under **ECS cluster configuration**, leave the defaults, which creates an ECS cluster of three EC2 instances\.\.
    + For **EthStats**, leave the default setting, which is *true*\.
    + For **EthStats Connection Secret**, type an arbitrary value that is at least six characters\.
