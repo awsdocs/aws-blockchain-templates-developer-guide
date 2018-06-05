@@ -14,3 +14,6 @@ You may choose to delete the prerequisites you created for the Ethereum network\
 
 **Delete the IAM role and EC2 instance profile**
 + Open the IAM console and choose **Roles**\. Select the role for ECS and the role for EC2 that you created earlier and choose **Delete**\.
+
+**Terminate the EC2 instance for the bastion host**
++ Open the Amazon EC2 dashboard, choose **Running instances**, select the EC2 instance that you created for the bastion host, choose **Actions**, **Instance State**, **Terminate**\.

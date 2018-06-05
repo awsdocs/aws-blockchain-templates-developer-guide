@@ -6,7 +6,7 @@ The following templates are available:
 + [AWS Blockchain Template for Ethereum](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/blockchain-templates-ethereum.html)
 + [AWS Blockchain Template for Hyperledger Fabric](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/blockchain-templates-hyperledger.html)
 
-AWS Blockchain Templates are available in the following Regions:
+AWS Blockchain Templates is available in the following Regions:
 + US West \(Oregon\) Region \(us\-west\-2\)
 + US East \(N\. Virginia\) Region \(us\-east\-1\)
 + US East \(Ohio\) Region \(us\-east\-2\)

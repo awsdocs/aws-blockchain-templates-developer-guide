@@ -52,27 +52,52 @@ When you choose an **Ethereum Network ID** from 1–4, the Ethereum nodes that y
 
 ## Prerequisites<a name="blockchain-ethereum-prereq"></a>
 
-When you set up your Ethereum network using the AWS Blockchain Template for Ethereum, the minimum requirements listed below must be satisfied\. The template requires you to specify the AWS components listed\.
+When you set up your Ethereum network using the AWS Blockchain Template for Ethereum, the minimum requirements listed below must be satisfied\. The template requires the AWS components listed for each of the following categories:
+
+**Topics**
++ [Prerequisites for Accessing Ethereum Resources](#blockchain-ethereum-prereq-access)
++ [IAM Prerequisites](#blockchain-ethereum-prereq-iam)
++ [Security Group Prerequisites](#blockchain-ethereum-prereq-sec)
++ [VPC Prerequisites](#blockchain-ethereum-prereq-vpc)
++ [Example IAM Permissions for the EC2 Instance Profile and ECS Role](#blockchain-ethereum-iam-examples)
+
+### Prerequisites for Accessing Ethereum Resources<a name="blockchain-ethereum-prereq-access"></a>
 
 
 | Prerequisite | For ECS Platform | For Docker\-Local | 
 | --- | --- | --- | 
 |  An Amazon EC2 key pair that you can use to access EC2 instances\. The key must exist in the same Region as the ECS cluster and other resources\.  |  ✔  |  ✔  | 
-| **IAM Prerequisites** | 
+|  An internet\-facing component, such as a bastion host or an internet\-facing load balancer, with an internal address from which traffic is allowed into the Application Load Balancer\. This is required with the ECS platform because the template creates an internal load balancer for security reasons\. This is required with the docker\-local platform when the EC2 instance is in a private subnet, which we recommend\. For information about configuring a bastion host, see [Create a Bastion Host](blockchain-template-getting-started-prerequisites.md#blockchain-templates-bastion-host)\.  |  ✔  |  ✔ \(with private subnet\)  | 
+
+### IAM Prerequisites<a name="blockchain-ethereum-prereq-iam"></a>
+
+
+| Prerequisite | For ECS Platform | For Docker\-Local | 
+| --- | --- | --- | 
 |  An IAM principal \(user or group\) that has permissions to work with all related services\.  |  ✔  |  ✔  | 
 |  An Amazon EC2 instance profile with appropriate permissions for EC2 instances to interact with other services\. For more information, see [To create an EC2 instance profile](blockchain-template-getting-started-prerequisites.md#create-ec2-role)\.   |  ✔  |  ✔  | 
 |  An IAM role with permissions for Amazon ECS to interact with other services\. For more information, see [Creating the ECS Role and Permissions](#blockchain-ethereum-ecs-role)\.  |  ✔  |   | 
-| **Security Group Prerequisites** | 
+
+### Security Group Prerequisites<a name="blockchain-ethereum-prereq-sec"></a>
+
+
+| Prerequisite | For ECS Platform | For Docker\-Local | 
+| --- | --- | --- | 
 | A security group for EC2 instances, with the following requirements: | ✔ |  ✔  | 
 |  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/blockchain-templates-ethereum.html)  | ✔ |  ✔  | 
 |  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/blockchain-templates-ethereum.html)  | ✔ |  ✔  | 
+| [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/blockchain-templates-ethereum.html) | ✔ |  | 
 | [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/blockchain-templates-ethereum.html) |  | ✔ | 
-|  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/blockchain-templates-ethereum.html) | ✔ |  | 
 |  A security group for the Application Load Balancer, with the following requirements: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/blockchain-templates-ethereum.html)  |  ✔  |   | 
-| **VPC Prerequisites** | 
+
+### VPC Prerequisites<a name="blockchain-ethereum-prereq-vpc"></a>
+
+
+| Prerequisite | For ECS Platform | For Docker\-Local | 
+| --- | --- | --- | 
 |  An Elastic IP address, which is used for accessing Ethereum services\.  |  ✔  |  ✔  | 
 |  A subnet to run EC2 instances\. We strongly recommend a private subnet\.  |  ✔  |  ✔  | 
-|  Two publicly accessible subnets in different Availability Zones, which is required by the Application Load Balancer\.  |  ✔  |   | 
+|  Two publicly accessible subnets\. Each subnet must be in different Availability Zones from each other, with one in the same Availability Zone as the subnet for EC2 instances\.  |  ✔  |   | 
 
 ### Example IAM Permissions for the EC2 Instance Profile and ECS Role<a name="blockchain-ethereum-iam-examples"></a>
 

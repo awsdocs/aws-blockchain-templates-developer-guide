@@ -1,10 +1,10 @@
 # Create the Ethereum Network<a name="blockchain-templates-create-stack"></a>
 
-The Ethereum network you specify using the template in this topic launches an AWS CloudFormation stack that creates an Amazon ECS cluster of EC2 instances for the Ethereum network\. The template relies on the resources you created earlier in [Set Up Prerequisites](blockchain-template-getting-started-prerequisites.md)\.
+The Ethereum network that you specify using the template in this topic launches an AWS CloudFormation stack that creates an Amazon ECS cluster of EC2 instances for the Ethereum network\. The template relies on the resources that you created earlier in [Set Up Prerequisites](blockchain-template-getting-started-prerequisites.md)\.
 
-When you launch the AWS CloudFormation stack using the template, it creates nested stacks for some tasks\. After they are complete, you can connect to resources served through the network's Application Load Balancer to verify that your Ethereum network is running and accessible\. 
+When you launch the AWS CloudFormation stack using the template, it creates nested stacks for some tasks\. After they are complete, you can connect to resources served by the network's Application Load Balancer through the bastion host to verify that your Ethereum network is running and accessible\.
 
-**To create the Ethereum network using AWS Blockchain Template for Ethereum**
+**To create the Ethereum network using the AWS Blockchain Template for Ethereum**
 
 1. Open the latest AWS Blockchain Template for Ethereum in the AWS CloudFormation console using the following quick\-links for the AWS Region in which you are working:
    + [Launch in US East \(N\. Virginia\) region \(us\-east\-1\)](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://aws-blockchain-templates-us-east-1.s3.us-east-1.amazonaws.com/ethereum/templates/latest/ethereum-network.template.yaml)
@@ -35,5 +35,7 @@ When you launch the AWS CloudFormation stack using the template, it creates nest
 1. To monitor the progress of the root stack and nested stacks, choose **Stacks**\.  
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/choose-stacks.png)
 
-1. When all stacks show **CREATE\_COMPLETE** for **Status**, you can connect to Ethereum user interfaces to verify that the network is running and accessible\. When you use the ECS container platform, URLs for connecting to EthStats, EthExplorer, and EthJsonRPC through the Application Load Balancer are available on the **Outputs** tab\. The Application Load Balancer is secure, so it requires that you connect to it through a *bastion host*, which proxies connections to help provide secure access to the Application Load Balancer\. For more information, see [Connecting to Ethereum Resources](blockchain-templates-ethereum.md#blockchain-ethereum-connecting)\.  
+1. When all stacks show **CREATE\_COMPLETE** for **Status**, you can connect to Ethereum user interfaces to verify that the network is running and accessible\. When you use the ECS container platform, URLs for connecting to EthStats, EthExplorer, and EthJsonRPC through the Application Load Balancer are available on the **Outputs** tab of the root stack\.
+**Important**  
+You won't be able to connect directly to these URLs or SSH directly until you set up a proxy connection through the bastion host on your client computer\. For more information, see [Connect to EthStats and EthExplorer Using the Bastion Host](blockchain-bastion-host-connect.md)\.  
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/stack-urls.png)

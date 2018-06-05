@@ -30,10 +30,10 @@ The following diagram depicts a Hyperledger Fabric network created using the tem
 
 Before you launch a Hyperledger Fabric network using template, make sure that the following requirements are satisfied: 
 + The IAM principle \(user or group\) that you use must have permission to work with all related services\.
-+ You must have access to an EC2 key pair that you can use to access EC2 instances \(for example, using SSH\)\. The key must exist in the same region as the instance\.
-+ You must have an EC2 instance profile with a permissions policy attached that allows access to Amazon Elastic Container Registry \(Amazon ECR\) to pull containers and to Amazon S3\. For an example permissions policy, see [Example IAM Permissions for the EC2 Instance Profile](#blockchain-hyperledger-ec2profile)\.
++ You must have access to a key pair that you can use to access EC2 instances \(for example, using SSH\)\. The key must exist in the same region as the instance\.
++ You must have an EC2 instance profile with a permissions policy attached that allows access to Amazon S3 and to Amazon Elastic Container Registry \(Amazon ECR\) to pull containers\. For an example permissions policy, see [Example IAM Permissions for the EC2 Instance Profile](#blockchain-hyperledger-ec2profile)\.
 + You must have a Amazon VPC network with a public subnet, or a private subnet with a NAT Gateway and Elastic IP address so that Amazon S3, AWS CloudFormation, and Amazon ECR can be accessed\.
-+ You must have an EC2 security group with inbound rules that allow SSH traffic \(port 22\) from the IP addresses that need to connect to the instance using SSH, and the same for clients that need to connect to Hyperledger Explorer \(port 8080\)\.
++ You must have an EC2 security group with inbound rules that allow SSH traffic \(port 22\) from the IP addresses that need to connect to the instance using SSH, and the same for clients that need to connect to Hyperledger Explorer \(port 80\)\.
 
 ### Example IAM Permissions for the EC2 Instance Profile<a name="blockchain-hyperledger-ec2profile"></a>
 

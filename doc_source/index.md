@@ -14,11 +14,12 @@ Amazon's trademarks and trade dress may not be used in
 
 -----
 ## Contents
-+ [What Are AWS Blockchain Templates?](what-are-blockchain-templates.md)
++ [What Is AWS Blockchain Templates?](what-are-blockchain-templates.md)
 + [Setting Up AWS Blockchain Templates](blockchain-templates-setting-up.md)
 + [Getting Started with AWS Blockchain Templates](blockchain-templates-getting-started.md)
    + [Set Up Prerequisites](blockchain-template-getting-started-prerequisites.md)
    + [Create the Ethereum Network](blockchain-templates-create-stack.md)
+   + [Connect to EthStats and EthExplorer Using the Bastion Host](blockchain-bastion-host-connect.md)
    + [Clean Up Resources](blockchain-templates-cleanup.md)
 + [AWS Blockchain Templates and Features](blockchain-template-features.md)
    + [Using the AWS Blockchain Template for Ethereum](blockchain-templates-ethereum.md)

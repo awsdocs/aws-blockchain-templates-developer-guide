@@ -1,6 +1,6 @@
-# What Are AWS Blockchain Templates?<a name="what-are-blockchain-templates"></a>
+# What Is AWS Blockchain Templates?<a name="what-are-blockchain-templates"></a>
 
-AWS Blockchain Templates help you quickly create and deploy blockchain networks on AWS using different blockchain frameworks\. Blockchain is a decentralized database technology that maintains a continually growing set of transactions and smart contracts hardened against tampering and revision using cryptography\.
+AWS Blockchain Templates helps you quickly create and deploy blockchain networks on AWS using different blockchain frameworks\. Blockchain is a decentralized database technology that maintains a continually growing set of transactions and smart contracts hardened against tampering and revision using cryptography\.
 
 A blockchain network is a peer\-to\-peer network that improves the efficiency and immutability of transactions for business processes like international payments, supply chain management, land registration, crowd funding, governance, financial transactions, and more\. This allows people and organizations who may not know one another to trust and independently verify the transaction record\.
 

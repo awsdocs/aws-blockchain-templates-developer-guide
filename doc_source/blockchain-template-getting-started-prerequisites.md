@@ -4,10 +4,11 @@ The AWS Blockchain Template for Ethereum configuration that you specify in this 
 + [Create a VPC and Subnets](#blockchain-templates-create-a-vpc)
 + [Create Security Groups](#blockchain-templates-create-security-group)
 + [Create an IAM Role for Amazon ECS and an EC2 Instance Profile](#blockchain-templates-iam-roles)
++ [Create a Bastion Host](#blockchain-templates-bastion-host)
 
 ## Create a VPC and Subnets<a name="blockchain-templates-create-a-vpc"></a>
 
-The AWS Blockchain Template for Ethereum launches resources into a virtual network that you define using Amazon Virtual Private Cloud \(Amazon VPC\)\. The configuration you specify in this tutorial creates an Application Load Balancer that requires two public subnets in different Availability Zones\. You must be able to reach the subnet addresses, so you create an Elastic IP address and public subnets for this purpose\. You create one public subnet and a private subnet when you create the VPC\. You then create a second public subnet within the VPC\.
+The AWS Blockchain Template for Ethereum launches resources into a virtual network that you define using Amazon Virtual Private Cloud \(Amazon VPC\)\. The configuration you specify in this tutorial creates an Application Load Balancer, which requires two public subnets in different Availability Zones\. In addition, a private subnet is required for the container instances, and the subnet must be in the same Availability Zone as the Application Load Balancer\. You first use the VPC Wizard to create one public subnet and a private subnet in the same Availability Zone\. You then create a second public subnet within this VPC in a different Availability Zone\.
 
 For more information, see [What is Amazon VPC?](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/) in the *Amazon VPC User Guide*\.
 
@@ -37,29 +38,40 @@ Use the Amazon VPC console \([https://console\.aws\.amazon\.com/vpc/](https://co
 
    You specify this subnet as one of the first of two subnets for the Application Load Balancer when you use the template\.
 
-1. For **Private subnet's IPv4 CIDR**, leave the default value\. For **Availability Zone**, leave the **No Preference** default\. For **Private subnet name**, enter a friendly name\.
+   Note the Availability Zone of this subnet because you select the same Availability Zone for the private subnet, and a different one for the other public subnet\.
+
+1. For **Private subnet's IPv4 CIDR**, leave the default value\. For **Availability Zone**, select the same Availability Zone as in the previous step\. For **Private subnet name**, enter a friendly name\.
+
+1. For **Elastic IP Allocation ID**, select the Elastic IP address that you created earlier\.
 
 1. Leave the default values for other settings\.
 
-   The example below shows a VPC **EthereumNetworkVPC** with a public subnet **EthereumPubSub1** and a private subnet **EthereumPvtSub1**\. The public subnet uses Availability Zone **us\-west\-2a**\. Note the Availability Zone because you choose a different zone in the next step\.  
-![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/VPC.png)
-
 1. Choose **Create VPC**\.
+
+   The example below shows a VPC **EthereumNetworkVPC** with a public subnet **EthereumPubSub1** and a private subnet **EthereumPvtSub1**\. The public subnet uses Availability Zone **us\-west\-2a**\.  
+![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/VPC.png)
 
 **To create the second public subnet in a different Availability Zone**
 
-1. In the navigation pane, choose **Subnets**, **Create Subnet**\.
+1. Choose **Subnets** and then select the public subnet that you created earlier from the list\. Select the **Route Table** tab and note the **Route table** ID\. You specify this same route table for the second public subnet below\.
 
-1. For **Name tag**, enter a name for the subnet\. For **VPC**, select the VPC that you created earlier\.
+1. Choose **Create Subnet**\.
+
+1. For **Name tag**, enter a name for the subnet\. You use this name later when you create the bastion host in this network\.
+
+1. For **VPC**, select the VPC that you created earlier\.
 
 1. For **Availability Zone**, select a different zone from the zone that you selected for the first public subnet\.
 
 1. For **IPv4 CIDR block**, enter **10\.0\.2\.0/24**\.
 
-1. Choose **Yes, Create**\.  
-![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/2nd-subnet.png)
+1. Choose **Yes, Create**\. The subnet is added to the list of subnets\.
 
-You should now see three subnets for the VPC that you created earlier\. Make a note of the three subnet names and IDs so that you can specify them using the template\.
+1. With the subnet selected from the list, choose **Subnet Actions**, **Modify auto\-assign IP settings**\. Select **Auto\-assign IPs**, **Save**, **Close**\. This allows the bastion host to obtain a public IP address when you create it in this subnet\.
+
+1. On the **Route Table** tab, choose **Edit**\. For **Change to**, select the route table ID that you noted earlier and choose **Save**\.
+
+You should now see three subnets for the VPC that you created earlier\. Make a note of the subnet names and IDs so that you can specify them using the template\.
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/subnets-listing.png)
 
@@ -67,11 +79,7 @@ You should now see three subnets for the VPC that you created earlier\. Make a n
 
 Security groups act as firewalls, controlling inbound and outbound traffic to resources\. When you use the template to create an Ethererum network on an Amazon ECS cluster, you specify two security groups:
 + A security group for EC2 instances that controls traffic to and from EC2 instances in the cluster
-+ A security group for the Application Load Balancer that controls traffic between the Application Load Balancer and external sources, and between the Application Load Balancer and EC2 instances in the network\.
-
-**Important**  
-In this tutorial, you create security groups that allow simplified access so the tutorial is easier to complete\. These security groups are not intended for production environments\. In particular, the security group for the Elastic Load Balancer you create here allows inbound traffic from all IP addresses to view Ethereum web interfaces\.  
-In addition, you might want to add rules that allow inbound traffic for specific applications and tasks\. For example, you might want to add an inbound rule to the security group for EC2 instances that allows inbound SSH traffic from specific IP addresses or ranges, so that you can connect directly to instances using SSH\. For more information, see [Amazon EC2 Security Groups for Linux Instances](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html) in the *Amazon EC2 User Guide for Linux Instances*\.
++ A security group for the Application Load Balancer that controls traffic between the Application Load Balancer, EC2 instances, and the bastion host\. You associate this security group with the bastion host as well\.
 
 Each security group has rules that allow communication between the Application Load Balancer and the EC2 instances, as well as other minimum rules\. This requires that the security groups reference one another\. For this reason, you first create the security groups and then update them with appropriate rules\.
 
@@ -108,18 +116,18 @@ Each security group has rules that allow communication between the Application L
 1. Select the security group for Application Load Balancers that you created earlier
 
 1. On the **Inbound** tab, choose **Edit** and then add the following inbound rules:
-**Warning**  
-The inbound rules below allow traffic on the specified ports from all IP addresses that you specify\. Limit the **Source** to include only trusted sources that require access to view Ethereum web interfaces\.
 
-   1. For **Type**, choose **HTTP**\. For **Source**, leave **Custom** selected, and then type a trusted IP address or a range of trusted IP addresses in CIDR format\. This rule allows these sources to communicate with the Application Load Balancer over HTTP\.
+   1. For **Type**, choose **All traffic**\. For **Source**, leave **Custom** selected, and then choose the security group you are currently editing from the list, for example, *EthereumALB\-SG*\. This allows the Application Load Balancer to communicate with itself and with the bastion host\.
 
    1. Choose **Add Rule**\.
 
-   1. For **Type**, choose **Custom TCP**\. For **Port Range**, type **8080**\. For **Source**, leave **Custom** selected, and then type a trusted IP address or a range of trusted IP addresses in CIDR format\. This rule allows these sources to view EthStats, which is served on Port 8080\.
+   1. For **Type**, choose **All traffic**\. For **Source**, leave **Custom** selected, and then choose the security group for EC2 instances from the list, for example, *EthereumEC2\-SG*\. This allows the EC2 instances in the security group to communicate with the Application Load Balancer and the bastion host\.
 
    1. Choose **Add Rule**\.
 
-   1. For **Type**, choose **Custom TCP**\. For **Port Range**, type **8545**\. For **Source**, leave **Custom** selected, and then type a trusted IP address or a range of trusted IP addresses in CIDR format\. This rule allows these sources to use JSON RPC over HTTP, which uses port 8545\.
+   1. For **Type**, choose **SSH**\. For **Source**, select **My IP**, which detects your computer's IP CIDR and enters it\.
+**Important**  
+This rule allows the bastion host to accept SSH traffic from your computer, enabling your computer to use the bastion host to view web interfaces and connect to EC2 instances on the Ethereum network\. To allow others to connect to the Ethereum network, add them as sources to this rule\. Only allow inbound traffic to trusted sources\.
 
    1. Choose **Save**\.
 
@@ -127,7 +135,11 @@ The inbound rules below allow traffic on the specified ports from all IP address
 
 1. Choose **Add Rule**\.
 
-1. For **Type**, choose **All traffic**\. For **Source**, leave **Custom** selected, and then choose the EC2 security group for EC2 instances from the list\. This allows outbound connections from the Application Load Balancer to EC2 instances in the Ethereum network\.
+1. For **Type**, choose **All traffic**\. For **Source**, leave **Custom** selected, and then choose the security group for EC2 instances from the list\. This allows outbound connections from the Application Load Balancer and the bastion host to EC2 instances in the Ethereum network\.
+
+1. Choose **Add Rule**\.
+
+1. For **Type**, choose **All traffic**\. For **Source**, leave **Custom** selected, and then choose the security group you are currently editing from the list, for example, *EthereumALB\-SG*\. This allows the Application Load Balancer to communicate with itself and with the bastion host\.
 
 1. Choose **Save**\.
 
@@ -224,3 +236,31 @@ The EC2 instance profile that you specify in the template is assumed by EC2 inst
 
 1. Copy the **Instance Profile ARN** value and save it so you can copy it again\. You need this ARN when you create the Ethereum network\.  
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/ec2-role-arn.png)
+
+## Create a Bastion Host<a name="blockchain-templates-bastion-host"></a>
+
+In this tutorial, you create a bastion host\. This is an EC2 instance that you use to connect to the web interfaces and instances in your Ethereum network\. It's sole purpose is to forward SSH traffic from trusted clients outside the VPC so that they can access Ethereum network resources\.
+
+You set up the bastion host because the Application Load Balancer that the template creates is internal, meaning it only routes internal IP addresses\. The bastion host:
++ Has an internal IP address that the Application Load Balancer recognizes because you launch it in the second public subnet that you created earlier\.
++ Has a public IP address that the subnet assigns, which can be accessed by trusted sources outside the VPC\.
++ Is associated with the security group for the Application Load Balancer you created earlier, which has an inbound rule that allows SSH traffic \(port 22\) from trusted clients\.
+
+To be able to access the Ethereum network, trusted clients need to be set up to connect through the bastion host\. For more information, see [Connect to EthStats and EthExplorer Using the Bastion Host](blockchain-bastion-host-connect.md)\. A bastion host is one approach\. You can use any approach that provides access from trusted clients to private resources within a VPC\.
+
+**To create a bastion host**
+
+1. Follow the first five steps to [Launch an Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-launch-instance) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+1. Choose **Edit Instance Details**\. For **Network**, choose the VPC you created earlier, for **Subnet** select the second public subnet that you created earlier\. Leave all other settings to their defaults\.
+
+1. Confirm the change when prompted, and then choose **Review and Launch**\.
+
+1. Choose **Edit Security Groups**\. For **Assign a security group**, choose **Select an existing security group**\.
+
+1. From the list of security groups, select the security group for the Application Load Balancer that you created earlier, and then choose **Review and Launch**\.
+
+1. Choose **Launch**\.
+
+1. Note the instance ID\. You need it later when you [Connect to EthStats and EthExplorer Using the Bastion Host](blockchain-bastion-host-connect.md)\.  
+![\[Image NOT FOUND\]](http://docs.aws.amazon.com/blockchain-templates/latest/developerguide/images/bastion-instance.png)
