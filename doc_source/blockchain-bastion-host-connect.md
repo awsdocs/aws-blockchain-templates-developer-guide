@@ -44,11 +44,11 @@ With the PuTTY connection open, you now configure your system or a browser exten
 
 1. On the **General** tab, make sure that **Enabled** is selected and enter a **Proxy Name** and **Proxy Notes** that help you identify this proxy configuration\.
 
-1. On the **Proxy Details** tab, choose **Manual Proxy Configuration**\. For **Host or IP Address** \(or **Server or IP Address** in some versions\), enter *localhost*\. For **Port**, enter *9001*\.
+1. On the **Proxy Details** tab, choose **Manual Proxy Configuration**\. For **Host or IP Address** \(or **Server or IP Address** in some versions\), enter *localhost*\. For **Port**, enter *9001*\. Select **SOCKS Proxy?**.
 
 1. On the **URL Pattern** tab, choose **Add New Pattern**\.
 
-1. For **Pattern name**, enter a name that's easy to identify, and for **URL Pattern**, enter **http://internal\-ether\-loadb\***\.
+1. For **Pattern name**, enter a name that's easy to identify, and for **URL Pattern**, enter **http://internal\-stackname\-loadb\***\.
 
 1. Leave the default selections for other settings and choose **Save**\.
 
