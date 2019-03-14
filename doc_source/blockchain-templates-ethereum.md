@@ -1,6 +1,6 @@
 # Using the AWS Blockchain Template for Ethereum<a name="blockchain-templates-ethereum"></a>
 
-Ethereum is a blockchain framework that runs smart contracts using Solidity, an Ethereum\-specific language\. Homestead is the most recent release of Ethereum\. For more information, see the [Ethereum Homestead Documentation](http://www.ethdocs.org/en/latest/) and the [Solidity](https://solidity.readthedocs.io/en/v0.4.21/#) documentation\.
+Ethereum is a blockchain framework that runs smart contracts using Solidity, an Ethereum\-specific language\. Constantinople is the most recent release of Ethereum\. For more information, see the [Ethereum Homestead Documentation](http://www.ethdocs.org/en/latest/) and the [Solidity](https://solidity.readthedocs.io/en/v0.4.21/#) documentation\.
 
 ## Links to Launch<a name="blockchain-ethereum-launch"></a>
 
